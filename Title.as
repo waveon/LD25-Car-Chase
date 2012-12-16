@@ -59,7 +59,7 @@ package
 			add(this.instructionButton);
 			
 			//create the version
-			this.version = new FlxText(8, FlxG.height - 30, 400, "Version 1.0");
+			this.version = new FlxText(8, FlxG.height - 30, 400, "Version 1.0.1");
 			this.version.setFormat(null, 15, 0xffffff, "left");
 			add(this.version);
 			

@@ -23,11 +23,15 @@ package
 		private var player:PlayerController, police:FlxGroup = new FlxGroup(), civilians:FlxGroup = new FlxGroup();
 		
 		//delays for new civilian and enemy spawning
-		private var enemySpawnTimer:FlxDelay = new FlxDelay(10000);
-		private var civilianSpawnTimer:FlxDelay = new FlxDelay(5000);
+		private var enemySpawnTimer:FlxDelay = new FlxDelay(5000);
+		private var civilianSpawnTimer:FlxDelay = new FlxDelay(2500);
+		private var extraPoliceTimer:FlxDelay = new FlxDelay(30000);
 		
 		//variables for the score and various text
 		private var score:int = 0, scoreText:FlxText, endText:FlxText;
+		
+		//counter for how many police spawn at once
+		private var policeSpawn:int = 1;
 		
 		override public function create():void 
 		{
@@ -65,9 +69,10 @@ package
 			this.endText.visible = false;
 			add(endText);
 			
-			//start the spawn timers
+			//start the timers
 			this.enemySpawnTimer.start();
 			this.civilianSpawnTimer.start();
+			this.extraPoliceTimer.start();
 		}
 		
 		override public function update():void 
@@ -136,16 +141,28 @@ package
 			{
 				this.civilians.add(new Civilian((FlxG.random() * 513) + 128, -100));
 				
-				this.civilianSpawnTimer = new FlxDelay(10000);
+				this.civilianSpawnTimer = new FlxDelay(7500);
 				this.civilianSpawnTimer.start();
 			}
 			
 			if (this.enemySpawnTimer.hasExpired)
 			{
-				this.police.add(new Police((FlxG.random() * 513) + 128, FlxG.height + 100));
+				for (var i:int = 0; i < this.policeSpawn; i++) 
+				{
+					this.police.add(new Police((FlxG.random() * 513) + 128, FlxG.height + 100));
+				}
 				
-				this.enemySpawnTimer = new FlxDelay(20000);
+				this.enemySpawnTimer = new FlxDelay(12000);
 				this.enemySpawnTimer.start();
+			}
+			
+			//raise the counter when the timer has expired
+			if (this.extraPoliceTimer.hasExpired) 
+			{
+				this.policeSpawn++;
+				
+				this.extraPoliceTimer = new FlxDelay(30000);
+				this.extraPoliceTimer.start();
 			}
 		}
 		
@@ -157,6 +174,7 @@ package
 			FlxG.collide(this.player, this.police, carKill);
 			FlxG.collide(this.player, this.civilians, carKill);
 			FlxG.collide(this.police, this.civilians, carKill);
+			FlxG.collide(this.civilians, this.civilians, carKill);
 			
 			//check if the player's bullets hit a car
 			FlxG.collide(Registry.Pbullets, this.police, BulletHitCar);
