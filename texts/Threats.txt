@@ -1,0 +1,8 @@
+Cop cars:
+Your main threat. They will keep chasing you until they either crash in another car or get shot by you.
+
+Civilian cars:
+Even though they're harmless, they are in your way. They still can be useful by letting the cops crash in them though...
+
+Off-road:
+You would get off the road to flee from the cops faster, but it's full off rocks and other hazards that will stop your escape. Stay on the road to avoid this hazard.

@@ -1,0 +1,11 @@
+Arrow keys:
+Move your car in the pressed direction.
+
+WASD:
+Shoot your gun in the pressed direction. Doing so will consume your ammo.
+
+Score:
+Shows your current score, this will rise for as long as you're alive
+
+Ammo:
+Shows the current ammo of your gun. You can't shoot anymore once it reaches zero.
